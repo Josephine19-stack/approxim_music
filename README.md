@@ -5,7 +5,7 @@ githubb d'ou provient les données: https://github.com/lucasnfe/adl-piano-midi
 
 - You are expected to choose a topic of study,The topic of the project must be related to K-complexity.
 - You will write a small report (in English) to present your results.
-Your report should emphasize the link with Kolmogorov complexity and Algorithmic Information.
+**Your report should emphasize the link with Kolmogorov complexity and Algorithmic Information.**
 - oral presentation of the work with slides to prepare.
 
 <u>**Notre sujet**</u>:
