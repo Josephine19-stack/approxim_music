@@ -38,26 +38,26 @@ def extract_midi_features_with_order(file_path):
     :param file_path: Path to the MIDI file.
     :return: A dictionary with note index as the key and a dictionary of note features as the value.
     """
-    notes = {}
+    partition = [] # = partition  Quadruplets (type, p, v, time)
     midi = MidiFile(file_path)
     time_elapsed = 0
     note_on_times = {}
     note_index = 0
 
-    for track in midi.tracks:
-        for msg in track:
-            time_elapsed += msg.time
-            if msg.type == 'note_on' and msg.velocity > 0:
-                note_on_times[msg.note] = (time_elapsed, msg.velocity)
-            elif msg.type == 'note_off' or (msg.type == 'note_on' and msg.velocity == 0):
-                if msg.note in note_on_times:
-                    start_time, velocity = note_on_times[msg.note]
-                    duration = time_elapsed - start_time
-                    notes[note_index] = (msg.note,duration,velocity) #pitch, duration, velocity
-                    note_index += 1
-                    del note_on_times[msg.note]
+  
+    for msg in midi:
+        time_elapsed += msg.time
+        if msg.type == 'note_on' and msg.velocity > 0:
+            note_on_times[msg.note] = (time_elapsed, msg.velocity)
+        elif msg.type == 'note_off' or (msg.type == 'note_on' and msg.velocity == 0):
+            if msg.note in note_on_times:
+                start_time, velocity = note_on_times[msg.note]
+                duration = time_elapsed - start_time
+                partition.append((msg.note,duration,velocity,start_time)) #pitch, duration, velocity , time
+                note_index += 1
+                del note_on_times[msg.note]
 
-    return notes
+    return partition
 
 def adl_load_dataset_to_csv(adl_path, output_csv):
     """
@@ -112,21 +112,11 @@ def adl_load_dataset_to_csv(adl_path, output_csv):
 
     print(f"Données sauvegardées dans {output_csv}")  
     
-    '''
-    A savoir les fichiers ignorés sont:
-    
-    Fichier ignoré : C:\Users\josep\Documents\Telecom Paris\algorithmic information\approxim_music\adl-piano-midi\midi\adl-piano-midi\adl-piano-midi\Rock\Album Rock\Billy Joel\Uptown Girl.mid - Erreur : Could not decode key with 8 sharps and mode 0
-    Fichier ignoré : C:\Users\josep\Documents\Telecom Paris\algorithmic information\approxim_music\adl-piano-midi\midi\adl-piano-midi\adl-piano-midi\Rock\Album Rock\Bob Seger\Weve  Got Tonight.mid - Erreur : Could not decode key with 8 sharps and mode 0
-    Fichier ignoré : C:\Users\josep\Documents\Telecom Paris\algorithmic information\approxim_music\adl-piano-midi\midi\adl-piano-midi\adl-piano-midi\Rock\Album Rock\Nazareth\Love Hurts.mid - Erreur : Could not decode key with 8 sharps and mode 0
-    Fichier ignoré : C:\Users\josep\Documents\Telecom Paris\algorithmic information\approxim_music\adl-piano-midi\midi\adl-piano-midi\adl-piano-midi\Rock\Folk Rock\Simon And Garfunkel\The Boxer.mid - Erreur : Could not decode key with 8 sharps and mode 0
-    Fichier ignoré : C:\Users\josep\Documents\Telecom Paris\algorithmic information\approxim_music\adl-piano-midi\midi\adl-piano-midi\adl-piano-midi\Rock\Pop Rock\James Blunt\Live.mid - Erreur : Could not decode key with 8 sharps and mode 0
-    Fichier ignoré : C:\Users\josep\Documents\Telecom Paris\algorithmic information\approxim_music\adl-piano-midi\midi\adl-piano-midi\adl-piano-midi\Rock\Pop Rock\Natalie Imbruglia\Torn.mid - Erreur : Could not decode key with 8 sharps and mode 0
-    '''
     
 if __name__ == "__main__":
 
-    midi_directory = "C:\\Users\\josep\\Documents\\Telecom Paris\\algorithmic information\\approxim_music\\adl-piano-midi\\midi\\adl-piano-midi"
-    output_directory = "C:\\Users\\josep\\Documents\\Telecom Paris\\algorithmic information\\approxim_music\\music_metrics.csv"
+    midi_directory = "adl-piano-midi"
+    output_directory = "music_metrics.csv"
 
     # Charger les données et les exporter
     adl_load_dataset_to_csv(midi_directory, output_directory)
