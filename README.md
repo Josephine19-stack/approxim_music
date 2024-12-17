@@ -5,7 +5,7 @@ githubb d'ou provient les données: https://github.com/lucasnfe/adl-piano-midi
 
 - You are expected to choose a topic of study,The topic of the project must be related to K-complexity.
 - You will write a small report (in English) to present your results.
-Your report should emphasize the link with Kolmogorov complexity and Algorithmic Information.
+**Your report should emphasize the link with Kolmogorov complexity and Algorithmic Information.**
 - oral presentation of the work with slides to prepare.
 
 <u>**Notre sujet**</u>:
@@ -21,12 +21,12 @@ A l'aide de fichiers MIDI, il devient possible d'estimer la complexité d'un mor
 
 <u>**Actuellement dans le Github**</u>:
 - fichier csv: Genre,Subgenre,Artist,FilePath,FileHash,Notes. **Je trouve interessant d'avoir les genres pour comparer la complexité entre les types de musiques, ou d'artiste ou autre**
-- fichier load_data.py : récupère la donnée brut et extrait les indormations
+- fichier load_data.py : récupère la donnée brut et extrait les informations
 - fichier .ipynb: load le csv, récupère l'entropy de shannon et compression. (on les utilise sur Pitch, duration et velocity pour chaque chanson)
 
 <u>**liens intéressants**</u>
-https://github.com/manuellamas/Music_and_Networks 
-https://github.com/MihailMiller/music-complexity
+- https://github.com/manuellamas/Music_and_Networks 
+- https://github.com/MihailMiller/music-complexity
 
 
 
